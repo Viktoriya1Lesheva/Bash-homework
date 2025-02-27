@@ -8,43 +8,40 @@ function k_pop() {
 	sudo groupadd blackpink
 	sudo usermod -aG blackpink jenny
 	sudo usermod -aG blackpink rose
-	sudo usermod -aG blakpinklisa
-	sudo usermod -aG blackpinkjisoo
+	sudo usermod -aG blackpink lisa
+	sudo usermod -aG blackpink jisoo
 }
 
 function wordpress() {
-	sudo yum install httpd  -y > /dev/null
-	sudo systemctl start httpd
-	sudo systemctl status httpd
-	sudo systemctl enable httpd
-	sudo dnf install wget php-mysqlnd httpd php-fpm php-mysqli mariadb105-server php-json php php-devel -y > /dev/null
-	wget https://wordpress.org/latest.tar.gz
-	tar -xzf latest.tar.gz
-	sudo mv wordpress/* /var/www/html
-	sudo rm -r /var/www/html/index.html
-	sudo chown -R apache:apache /var/www/html 
-	sudo chmod -R_755 /var/www/html
+	sudo yum update -y
+	sudo yum install -y httpd php php-mysqlnd mariadb-server wget unzip
+	sudo systemctl enable httpd mysqld
+	sudo systemctl start httpd mysqld
+	cd /var/www/html || exit
+	sudo wget https://wordpress.org/latest.zip
+	sudo unzip latest.zip
+	sudo mv wordpress/* /var/www/html/
+	sudo rm - rf wordpress latest.zip
+	sudo chown -R apache:apache /var/www/html
+        sudo chmod -R 755 /var/www/html
 	sudo systemctl restart httpd
-
 }
 
 function calculator() {
-	echo $((12+4))
-	echo $((12-4))
-	echo $((12*4))
-	echo $((12/4))
+	echo "Additional: $((12+4))"
+	echo "Subtraction: $((12-4))"
+	echo "Multiplication: $((12*4))"
+	echo "Division: $((12/4))"
 }
 
 function binary() {
-	sudo yum install tree -y > /dev/null
-	tree
-	sudo yum install -y yum-utils shadow-utils
+	sudo yum install -y tree yum-utils
 	sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 	sudo yum -y install terraform
 	terraform version
 }
 
-k-pop
+k_pop
 wordpress
 calculator
 binary
