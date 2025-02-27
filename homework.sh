@@ -14,9 +14,9 @@ function k_pop() {
 
 function wordpress() {
 	sudo yum update -y
-	sudo yum install -y httpd php php-mysqlnd mariadb-server wget unzip
-	sudo systemctl enable httpd mysqld
-	sudo systemctl start httpd mysqld
+	sudo yum install -y httpd php php-mysqlnd mariadb105-server wget unzip
+	sudo systemctl enable httpd mariadb
+	sudo systemctl start httpd mariadb
 	cd /var/www/html || exit
 	sudo wget https://wordpress.org/latest.zip
 	sudo unzip latest.zip
@@ -28,13 +28,14 @@ function wordpress() {
 }
 
 function calculator() {
-	echo "Additional: $((12+4))"
+	echo "Addition: $((12+4))"
 	echo "Subtraction: $((12-4))"
 	echo "Multiplication: $((12*4))"
 	echo "Division: $((12/4))"
 }
 
 function binary() {
+	sudo yum update -y
 	sudo yum install -y tree yum-utils
 	sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 	sudo yum -y install terraform
